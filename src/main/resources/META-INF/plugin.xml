@@ -1,18 +1,31 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.adhithya0010.jsonconsolelogs</id>
-    <name>json-console-logs</name>
-    <vendor>adhithya0010</vendor>
+    <id>com.adhithya.jsonconsolelogs</id>
+    <name>JSON Console Log Formatter</name>
+    <vendor>Adhithya Shankar</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
+    <resource-bundle>messages.bundle</resource-bundle>
+
+    <actions>
+        <action id="JsonConsoleLogs.OpenConfigDialog"
+                class="com.adhithya.jsonconsolelogs.actions.JsonLogFormatConfigAction"
+                text="Configure JSON Console Logs"
+                description="Add configuration for formatting json console logs"
+                icon="/assets/logo.svg"/>
+    </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.adhithya0010.jsonconsolelogs.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <consoleActionsPostProcessor
+                implementation="com.adhithya.jsonconsolelogs.providers.ConsoleActionsPostProcessor"/>
+        <consoleInputFilterProvider implementation="com.adhithya.jsonconsolelogs.providers.ConsoleInputFilterProvider"/>
+        <console.folding implementation="com.adhithya.jsonconsolelogs.providers.CodeFoldingProvider"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.adhithya0010.jsonconsolelogs.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener
+                class="com.adhithya.jsonconsolelogs.service.ExecutionListener"
+                topic="com.intellij.execution.ExecutionListener"/>
     </applicationListeners>
 </idea-plugin>
