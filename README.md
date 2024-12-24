@@ -4,8 +4,16 @@
 [![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
 
+<!-- Plugin description -->
 
-This plugin helps in formatting the log statements providing options to highlight attributes.
+This plugin helps in formatting JSON based log statements enabling developers to
+
+- Log selective attributes from JSON log statement
+- Highlight attributes setting
+- Printing an attribute on a separate line. Useful for attributes like stack trace
+- Configure multiple profiles and the ability to configure profiles for individual consoles
+
+<!-- Plugin description end -->
 
 ## Screenshots
 
