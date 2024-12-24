@@ -50,6 +50,13 @@ public class JSONFieldsFilter implements InputFilter {
   @Override
   public List<Pair<String, ConsoleViewContentType>> applyFilter(
       String statement, ConsoleViewContentType contentType) {
+    return CommonUtils.logTimer("JSONFieldsFilter.applyFilter", () -> {
+      return applyFilterLogic(statement, contentType);
+    });
+  }
+
+  public List<Pair<String, ConsoleViewContentType>> applyFilterLogic(
+      String statement, ConsoleViewContentType contentType) {
     // fetching the config
     JsonLogConfig state = JsonConfigService.getInstance().getState();
 
