@@ -15,6 +15,7 @@ import com.intellij.openapi.editor.markup.TextAttributes;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Pair;
 
+import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
 import com.adhithya.jsonconsolelogs.models.FieldConfig;
 import com.adhithya.jsonconsolelogs.models.JsonLogConfig;
 import com.adhithya.jsonconsolelogs.models.Profile;
@@ -36,11 +37,15 @@ public class JSONFieldsFilter implements InputFilter {
   private final ConsoleView consoleView;
   private final Project project;
   private final ActiveProfileService activeProfileService;
+  private final CommonUtils commonUtils;
+  private final JSONUtils jsonUtils;
 
   public JSONFieldsFilter(ConsoleView consoleView, Project project) {
     this.consoleView = consoleView;
     this.project = project;
     this.activeProfileService = ActiveProfileService.getInstance(project);
+    this.commonUtils = UtilsFactory.getInstance().getCommonUtils();
+    this.jsonUtils = UtilsFactory.getInstance().getJsonUtils();
   }
 
   private boolean isEnabled(JsonLogConfig state) {
@@ -50,9 +55,11 @@ public class JSONFieldsFilter implements InputFilter {
   @Override
   public List<Pair<String, ConsoleViewContentType>> applyFilter(
       String statement, ConsoleViewContentType contentType) {
-    return CommonUtils.logTimer("JSONFieldsFilter.applyFilter", () -> {
-      return applyFilterLogic(statement, contentType);
-    });
+    return commonUtils.logTimer(
+        "JSONFieldsFilter.applyFilter",
+        () -> {
+          return applyFilterLogic(statement, contentType);
+        });
   }
 
   public List<Pair<String, ConsoleViewContentType>> applyFilterLogic(
@@ -65,7 +72,7 @@ public class JSONFieldsFilter implements InputFilter {
       return null;
     }
 
-    if (!JSONUtils.isValidJSON(statement)) {
+    if (!jsonUtils.isValidJSON(statement)) {
       logger.trace("Invalid json statement");
       return null;
     }
@@ -100,10 +107,10 @@ public class JSONFieldsFilter implements InputFilter {
     return result;
   }
 
-  private static ConsoleViewContentType buildConsoleViewContentType(
+  private ConsoleViewContentType buildConsoleViewContentType(
       FieldConfig fieldConfig, ConsoleViewContentType contentType) {
     TextAttributes textAttributes =
-        CommonUtils.computeIfNull(
+        commonUtils.computeIfNull(
             contentType.getAttributes(),
             () -> {
               TextAttributesKey.TextAttributeKeyDefaultsProvider service =
@@ -116,7 +123,7 @@ public class JSONFieldsFilter implements InputFilter {
             });
 
     // always modify the copy
-    textAttributes = CommonUtils.deepCopy(textAttributes);
+    textAttributes = commonUtils.deepCopy(textAttributes);
 
     if (Objects.nonNull(fieldConfig.getForegroundColor())
         && Boolean.TRUE.equals(fieldConfig.getForegroundColor().getEnabled())

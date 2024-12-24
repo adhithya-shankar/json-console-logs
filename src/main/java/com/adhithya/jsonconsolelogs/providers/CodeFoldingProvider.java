@@ -7,6 +7,7 @@ import com.intellij.execution.ConsoleFolding;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.project.Project;
 
+import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
 import com.adhithya.jsonconsolelogs.models.JsonLogConfig;
 import com.adhithya.jsonconsolelogs.models.Profile;
 import com.adhithya.jsonconsolelogs.service.ActiveProfileService;
@@ -16,10 +17,15 @@ import com.adhithya.jsonconsolelogs.utils.JSONUtils;
 public class CodeFoldingProvider extends ConsoleFolding {
 
   private ConsoleView consoleView;
+  private final JSONUtils jsonUtils;
+
+  public CodeFoldingProvider() {
+    this.jsonUtils = UtilsFactory.getInstance().getJsonUtils();
+  }
 
   @Override
   public boolean shouldFoldLine(Project project, String line) {
-    return isEnabled(project) && JSONUtils.isValidJSON(line);
+    return isEnabled(project) && jsonUtils.isValidJSON(line);
   }
 
   @Override

@@ -7,6 +7,7 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 
+import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
 import com.adhithya.jsonconsolelogs.models.JsonLogConfig;
 import com.adhithya.jsonconsolelogs.utils.CommonUtils;
 
@@ -17,6 +18,11 @@ import com.adhithya.jsonconsolelogs.utils.CommonUtils;
 public final class JsonConfigService implements PersistentStateComponent<JsonLogConfig> {
 
   private final JsonLogConfig state = new JsonLogConfig();
+  private final CommonUtils commonUtils;
+
+  public JsonConfigService() {
+    this.commonUtils = UtilsFactory.getInstance().getCommonUtils();
+  }
 
   public static JsonConfigService getInstance() {
     return ApplicationManager.getApplication().getService(JsonConfigService.class);
@@ -33,7 +39,7 @@ public final class JsonConfigService implements PersistentStateComponent<JsonLog
   }
 
   public void updateState(JsonLogConfig newState) {
-    CommonUtils.computeIfNull(
+    commonUtils.computeIfNull(
         newState,
         () -> {
           state.setEnabled(newState.isEnabled());

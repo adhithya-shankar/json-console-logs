@@ -17,6 +17,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.ui.JBSplitter;
 import com.intellij.uiDesigner.core.GridConstraints;
 
+import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
 import com.adhithya.jsonconsolelogs.models.JsonLogConfig;
 import com.adhithya.jsonconsolelogs.models.Profile;
 import com.adhithya.jsonconsolelogs.service.ActiveProfileService;
@@ -29,6 +30,7 @@ public class JsonLogFormConfigForm extends JFrame {
 
   private final Project project;
   private final ConsoleView consoleView;
+  private final CommonUtils commonUtils;
   @Getter private JPanel rootComponent;
   private JComboBox<Profile> activeProfileComboBox;
   private JPanel spacer;
@@ -46,6 +48,7 @@ public class JsonLogFormConfigForm extends JFrame {
   public JsonLogFormConfigForm(Project project, ConsoleView consoleView) {
     this.project = project;
     this.consoleView = consoleView;
+    this.commonUtils = UtilsFactory.getInstance().getCommonUtils();
 
     activeProfileService = ActiveProfileService.getInstance(project);
 
@@ -111,7 +114,7 @@ public class JsonLogFormConfigForm extends JFrame {
     activeProfileComboBox.setModel(activeProfilesComboBoxModel);
     activeProfilesComboBoxModel.addAll(profiles);
     activeProfilesComboBoxModel.setSelectedItem(
-        CommonUtils.computeIfNull(
+        commonUtils.computeIfNull(
             activeProfileService.getActiveProfile(consoleView), config::getDefaultProfile));
 
     // initialize enabled checkbox
