@@ -10,12 +10,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.adhithya.jsonconsolelogs.utils.CommonUtils;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.ui.EditorTextField;
 
+import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
 import com.adhithya.jsonconsolelogs.models.ColorConfig;
 import com.adhithya.jsonconsolelogs.models.Profile;
 import com.adhithya.jsonconsolelogs.ui.ActionColumnDecorator;
@@ -23,6 +23,7 @@ import com.adhithya.jsonconsolelogs.ui.ColorConfigCellEditor;
 import com.adhithya.jsonconsolelogs.ui.ColorConfigCellRenderer;
 import com.adhithya.jsonconsolelogs.ui.FieldConfigTable;
 import com.adhithya.jsonconsolelogs.ui.FieldConfigTableModel;
+import com.adhithya.jsonconsolelogs.utils.CommonUtils;
 
 import lombok.Getter;
 
@@ -34,6 +35,7 @@ public class ProfileForm {
   private EditorTextField profileTextField;
   private JCheckBox showOriginalLog;
 
+  private final CommonUtils commonUtils;
   private final List<Consumer<Profile>> profileNameChangeListeners = new LinkedList<>();
 
   // model
@@ -42,6 +44,7 @@ public class ProfileForm {
 
   public ProfileForm(Profile profile) {
     this.profile = profile;
+    this.commonUtils = UtilsFactory.getInstance().getCommonUtils();
     initComponent();
     initListeners();
     refreshData();
@@ -108,16 +111,18 @@ public class ProfileForm {
   }
 
   private void refreshData() {
-    CommonUtils.logTimer("ProfileForm.refreshData", () -> {
-      if (Objects.nonNull(profile)) {
-        profileTextField.setText(profile.getName());
-        fieldConfigTable.initialize(profile.getFieldConfigs());
-        showOriginalLog.setSelected(profile.isShowOriginalLog());
-      } else {
-        profileTextField.setText(null);
-        fieldConfigTable.initialize(List.of());
-      }
-      return null;
-    });
+    commonUtils.logTimer(
+        "ProfileForm.refreshData",
+        () -> {
+          if (Objects.nonNull(profile)) {
+            profileTextField.setText(profile.getName());
+            fieldConfigTable.initialize(profile.getFieldConfigs());
+            showOriginalLog.setSelected(profile.isShowOriginalLog());
+          } else {
+            profileTextField.setText(null);
+            fieldConfigTable.initialize(List.of());
+          }
+          return null;
+        });
   }
 }

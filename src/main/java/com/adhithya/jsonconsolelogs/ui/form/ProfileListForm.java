@@ -17,6 +17,7 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.ui.components.JBList;
 import com.intellij.uiDesigner.core.GridConstraints;
 
+import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
 import com.adhithya.jsonconsolelogs.models.Profile;
 import com.adhithya.jsonconsolelogs.ui.ActionButtonsFactory;
 import com.adhithya.jsonconsolelogs.utils.CommonUtils;
@@ -34,6 +35,7 @@ public class ProfileListForm {
   private final List<Consumer<Profile>> profileSelectionListeners = new LinkedList<>();
   private final List<Consumer<Profile>> defaultProfileChangeListeners = new LinkedList<>();
 
+  private final CommonUtils commonUtils;
   private final List<Profile> profiles;
   private Profile defaultProfile;
   private Profile currentProfile;
@@ -41,7 +43,8 @@ public class ProfileListForm {
   public ProfileListForm(List<Profile> profiles, Profile defaultProfile, Profile currentProfile) {
     this.profiles = profiles;
     this.defaultProfile = defaultProfile;
-    this.currentProfile = CommonUtils.computeIfNull(currentProfile, () -> defaultProfile);
+    this.commonUtils = UtilsFactory.getInstance().getCommonUtils();
+    this.currentProfile = this.commonUtils.computeIfNull(currentProfile, () -> defaultProfile);
     initComponents();
     initListeners();
   }

@@ -8,6 +8,7 @@ import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts.ConfigurableName;
 
+import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
 import com.adhithya.jsonconsolelogs.models.JsonLogConfig;
 import com.adhithya.jsonconsolelogs.service.JsonConfigService;
 import com.adhithya.jsonconsolelogs.ui.form.JsonLogFormConfigForm;
@@ -19,16 +20,18 @@ public class JsonLogConfigurable implements Configurable {
 
   private final Project project;
   private final ConsoleView consoleView;
+  private final CommonUtils commonUtils;
   private JsonLogFormConfigForm form;
 
   public JsonLogConfigurable(Project project, ConsoleView consoleView) {
     this.project = project;
     this.consoleView = consoleView;
+    this.commonUtils = UtilsFactory.getInstance().getCommonUtils();
   }
 
   @Override
   public @Nullable JComponent createComponent() {
-    form = CommonUtils.computeIfNull(form, () -> new JsonLogFormConfigForm(project, consoleView));
+    form = commonUtils.computeIfNull(form, () -> new JsonLogFormConfigForm(project, consoleView));
     return form.getRootComponent();
   }
 
@@ -44,10 +47,12 @@ public class JsonLogConfigurable implements Configurable {
 
   @Override
   public void apply() throws ConfigurationException {
-    CommonUtils.logTimer("JsonLogConfigurable.apply", () -> {
-      JsonLogConfig updatedConfig = form.getUpdatedConfig();
-      JsonConfigService.getInstance().updateState(updatedConfig);
-      return null;
-    });
+    commonUtils.logTimer(
+        "JsonLogConfigurable.apply",
+        () -> {
+          JsonLogConfig updatedConfig = form.getUpdatedConfig();
+          JsonConfigService.getInstance().updateState(updatedConfig);
+          return null;
+        });
   }
 }

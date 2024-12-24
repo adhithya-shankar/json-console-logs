@@ -1,47 +1,37 @@
 package com.adhithya.jsonconsolelogs.utils;
 
-import java.util.function.Supplier;
+import com.intellij.openapi.diagnostic.Logger;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JSONUtils {
 
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  private static final Logger logger = Logger.getInstance(JSONUtils.class);
 
   static {
     OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 
-  public static ObjectMapper getObjectMapper() {
+  public ObjectMapper getObjectMapper() {
     return OBJECT_MAPPER;
   }
 
-  public static boolean isValidJSON(String statement) {
+  public boolean isValidJSON(String statement) {
     try {
-      OBJECT_MAPPER.readTree(statement);
+      getObjectMapper().readTree(statement);
       return true;
     } catch (Exception e) {
       return false;
     }
   }
 
-  public static <T> T readValue(String json, Supplier<T> defaultValueSupplier) {
+  public String writeValue(Object o, String defaultValue) {
     try {
-      return OBJECT_MAPPER.readValue(json, new TypeReference<T>() {});
+      return getObjectMapper().writeValueAsString(o);
     } catch (Exception e) {
-      return defaultValueSupplier.get();
-    }
-  }
-
-  public static String writeValue(Object o, String defaultValue) {
-    try {
-      return OBJECT_MAPPER.writeValueAsString(o);
-    } catch (Exception e) {
+      logger.warn("Exception occurred while generating json string", e);
       return defaultValue;
     }
   }
