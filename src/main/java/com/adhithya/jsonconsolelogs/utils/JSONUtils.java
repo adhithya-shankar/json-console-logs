@@ -31,7 +31,7 @@ public class JSONUtils {
     try {
       return getObjectMapper().writeValueAsString(o);
     } catch (Exception e) {
-      logger.error("Exception occurred while generating json string", e);
+      logger.warn("Exception occurred while generating json string", e);
       return defaultValue;
     }
   }
