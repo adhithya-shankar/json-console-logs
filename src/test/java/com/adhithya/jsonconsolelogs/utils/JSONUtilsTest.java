@@ -8,7 +8,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,7 +49,8 @@ public class JSONUtilsTest {
     jsonUtils = Mockito.spy(jsonUtils);
     ObjectMapper mockObjectMapper = mock(ObjectMapper.class);
     when(jsonUtils.getObjectMapper()).thenReturn(mockObjectMapper);
-    when(mockObjectMapper.writeValueAsString(any())).thenThrow(new JsonMappingException(null, "Mocked"));
+    when(mockObjectMapper.writeValueAsString(any()))
+        .thenThrow(new JsonMappingException(null, "Mocked"));
     assertEquals("{}", jsonUtils.writeValue(data, "{}"));
   }
 }
