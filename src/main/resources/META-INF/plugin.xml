@@ -4,6 +4,11 @@
     <name>JSON Console Log Formatter</name>
     <vendor>Adhithya Shankar</vendor>
 
+    <description><![CDATA[
+    Applications these days generate logs which could be of JSON format.
+    This plugin helps in formatting the log statements providing options to highlight attributes.
+    ]]></description>
+
     <depends>com.intellij.modules.platform</depends>
 
     <resource-bundle>messages.bundle</resource-bundle>
