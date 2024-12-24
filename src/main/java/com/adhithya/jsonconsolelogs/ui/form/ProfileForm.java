@@ -10,6 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.adhithya.jsonconsolelogs.utils.CommonUtils;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
@@ -107,13 +108,16 @@ public class ProfileForm {
   }
 
   private void refreshData() {
-    if (Objects.nonNull(profile)) {
-      profileTextField.setText(profile.getName());
-      fieldConfigTable.initialize(profile.getFieldConfigs());
-      showOriginalLog.setSelected(profile.isShowOriginalLog());
-    } else {
-      profileTextField.setText(null);
-      fieldConfigTable.initialize(List.of());
-    }
+    CommonUtils.logTimer("ProfileForm.refreshData", () -> {
+      if (Objects.nonNull(profile)) {
+        profileTextField.setText(profile.getName());
+        fieldConfigTable.initialize(profile.getFieldConfigs());
+        showOriginalLog.setSelected(profile.isShowOriginalLog());
+      } else {
+        profileTextField.setText(null);
+        fieldConfigTable.initialize(List.of());
+      }
+      return null;
+    });
   }
 }

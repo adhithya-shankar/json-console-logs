@@ -44,7 +44,10 @@ public class JsonLogConfigurable implements Configurable {
 
   @Override
   public void apply() throws ConfigurationException {
-    JsonLogConfig updatedConfig = form.getUpdatedConfig();
-    JsonConfigService.getInstance().updateState(updatedConfig);
+    CommonUtils.logTimer("JsonLogConfigurable.apply", () -> {
+      JsonLogConfig updatedConfig = form.getUpdatedConfig();
+      JsonConfigService.getInstance().updateState(updatedConfig);
+      return null;
+    });
   }
 }

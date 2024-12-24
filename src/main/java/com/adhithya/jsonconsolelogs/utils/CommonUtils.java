@@ -8,6 +8,7 @@ import com.intellij.openapi.diagnostic.Logger;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.time.StopWatch;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommonUtils {
@@ -29,5 +30,17 @@ public class CommonUtils {
       logger.error("Exception occurred while deserialization", e);
       return null;
     }
+  }
+
+  public static <T> T logTimer(String taskName, Supplier<T> task) {
+    if (!Boolean.parseBoolean(System.getenv("console.action.timer.enabled"))) {
+      return task.get();
+    }
+    StopWatch stopWatch = new StopWatch();
+    stopWatch.start();
+    T t = task.get();
+    stopWatch.stop();
+    logger.debug("Time taken by [%s]: %d ms".formatted(taskName, stopWatch.getTime()));
+    return t;
   }
 }
