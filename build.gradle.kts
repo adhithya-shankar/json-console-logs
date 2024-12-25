@@ -1,3 +1,5 @@
+import groovy.lang.Closure
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
@@ -126,6 +128,18 @@ tasks {
 
     publishPlugin {
         dependsOn(patchChangelog)
+    }
+
+    test {
+        testLogging {
+            showStandardStreams = true
+            showExceptions = true
+            showCauses = true
+            showStackTraces = true
+            events("standardOut", "passed", "skipped", "failed")
+        }
+//        val myClosure: Closure<Any?> = closureOf<Any> { println("Test execution completed: ${this}") }
+//        afterSuite(myClosure)
     }
 }
 

@@ -1,0 +1,46 @@
+{
+  "id": "default",
+  "name": "Default",
+  "showOriginalLog": true,
+  "fieldConfigs": [
+    {
+      "jsonPath": "$.time",
+      "foregroundColor": {
+        "enabled": true,
+        "color": null
+      },
+      "backgroundColor": {
+        "enabled": true,
+        "color": null
+      },
+      "enabled": true,
+      "shouldPrintOnNewLine": false
+    },
+    {
+      "jsonPath": "$.level",
+      "foregroundColor": {
+        "enabled": true,
+        "color": null
+      },
+      "backgroundColor": {
+        "enabled": true,
+        "color": null
+      },
+      "enabled": true,
+      "shouldPrintOnNewLine": false
+    },
+    {
+      "jsonPath": "$.message",
+      "foregroundColor": {
+        "enabled": true,
+        "color": null
+      },
+      "backgroundColor": {
+        "enabled": true,
+        "color": null
+      },
+      "enabled": true,
+      "shouldPrintOnNewLine": false
+    }
+  ]
+}
