@@ -12,11 +12,17 @@ import lombok.Getter;
 @Service
 public final class UtilsFactory {
 
-  @Getter private final CommonUtils commonUtils = new CommonUtils();
+  @Getter private final JSONUtils jsonUtils;
 
-  @Getter private final JSONUtils jsonUtils = new JSONUtils();
+  @Getter private final CommonUtils commonUtils;
 
-  @Getter private final ConfigUtils configUtils = new ConfigUtils();
+  @Getter private final ConfigUtils configUtils;
+
+  public UtilsFactory() {
+    jsonUtils = new JSONUtils();
+    configUtils = new ConfigUtils();
+    commonUtils = new CommonUtils(jsonUtils, configUtils);
+  }
 
   public static UtilsFactory getInstance() {
     return ApplicationManager.getApplication().getService(UtilsFactory.class);

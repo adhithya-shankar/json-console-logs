@@ -2,16 +2,17 @@
 <idea-plugin>
     <id>com.adhithya.jsonconsolelogs</id>
     <name>JSON Console Log Formatter</name>
-    <vendor>Adhithya Shankar</vendor>
+    <vendor email="adhithya0010@gmail.com">Adhithya Shankar</vendor>
 
     <description><![CDATA[
-    This plugin helps in formatting JSON based log statements enabling developers to
-
-    - Log selective attributes from JSON log statement
-    - Highlight attributes setting
-    - Printing an attribute on a separate line. Useful for attributes like stack trace
-    - Configure multiple profiles and the ability to configure profiles for individual consoles
-    ]]></description>
+This plugin helps in formatting JSON based log statements enabling developers to<br>
+<ul>
+    <li>Log selective attributes from JSON log statement</li>
+    <li>Highlight attributes setting</li>
+    <li>Printing an attribute on a separate line. Useful for attributes like stack trace</li>
+    <li>Configure multiple profiles and the ability to configure profiles for individual consoles</li>
+</ul>
+]]></description>
 
     <depends>com.intellij.modules.platform</depends>
 

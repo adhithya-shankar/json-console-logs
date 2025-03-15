@@ -1,27 +1,24 @@
 package com.adhithya.jsonconsolelogs.utils;
 
+import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.MockitoAnnotations;
+
+import java.util.function.Supplier;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.function.Supplier;
-
-import com.adhithya.jsonconsolelogs.factory.UtilsFactory;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
 public class CommonUtilsTest {
 
   private CommonUtils commonUtils;
-  private MockedStatic<UtilsFactory> utilsFactoryStaticMock;
 
   @Mock private UtilsFactory utilsFactory;
 
@@ -32,17 +29,7 @@ public class CommonUtilsTest {
   @Before
   public void setup() {
     MockitoAnnotations.openMocks(this);
-    this.utilsFactoryStaticMock = Mockito.mockStatic(UtilsFactory.class);
-    utilsFactoryStaticMock.when(() -> UtilsFactory.getInstance()).thenReturn(utilsFactory);
-    when(utilsFactory.getJsonUtils()).thenReturn(jsonUtils);
-    when(utilsFactory.getConfigUtils()).thenReturn(configUtils);
-
-    commonUtils = new CommonUtils();
-  }
-
-  @After
-  public void cleanUp() {
-    utilsFactoryStaticMock.close();
+    commonUtils = new CommonUtils(jsonUtils, configUtils);
   }
 
   @Test

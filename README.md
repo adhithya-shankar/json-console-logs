@@ -24,6 +24,7 @@ JSON Log Config Dialog
 Console statement rewritten based on configuration
 
 <img src="screenshots/Screenshot 2.png" />
+<img src="screenshots/Screenshot 3.png" />
 
 
 ## Installation

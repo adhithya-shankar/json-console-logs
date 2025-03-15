@@ -18,9 +18,9 @@ public class CommonUtils {
   private final JSONUtils jsonUtils;
   private final ConfigUtils configUtils;
 
-  public CommonUtils() {
-    this.jsonUtils = UtilsFactory.getInstance().getJsonUtils();
-    this.configUtils = UtilsFactory.getInstance().getConfigUtils();
+  public CommonUtils(JSONUtils jsonUtils, ConfigUtils configUtils) {
+    this.jsonUtils = jsonUtils;
+    this.configUtils = configUtils;
   }
 
   public <T> T computeIfNull(T obj, Supplier<T> function) {
