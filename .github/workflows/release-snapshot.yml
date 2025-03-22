@@ -22,5 +22,5 @@ jobs:
           java-version: '17' # Replace with the version of Java required for your Gradle build
 
       # Run the publishPlugin Gradle task
-      - name: Publish Plugin
-        run: ./gradlew publishPlugin
+      - name: Test plugin
+        run: ./gradlew test
