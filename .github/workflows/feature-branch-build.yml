@@ -8,6 +8,8 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      CHANNEL: snapshot
 
     steps:
       # Checkout the repository
@@ -24,3 +26,7 @@ jobs:
       # Run the publishPlugin Gradle task
       - name: Test plugin
         run: ./gradlew test
+
+      # Run the publishPlugin Gradle task
+      - name: Release snapshot plugin
+        run: ./gradlew publishPlugin
