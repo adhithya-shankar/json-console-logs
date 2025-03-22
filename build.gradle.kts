@@ -12,6 +12,8 @@ plugins {
     alias(libs.plugins.kover) // Gradle Kover Plugin
 
     id("com.diffplug.spotless") version "6.15.0"
+    id("jacoco")
+    id("org.sonarqube") version "3.5.0.2730"
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -143,6 +145,12 @@ tasks {
         }
 //        val myClosure: Closure<Any?> = closureOf<Any> { println("Test execution completed: ${this}") }
 //        afterSuite(myClosure)
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.required = true
+        }
     }
 }
 

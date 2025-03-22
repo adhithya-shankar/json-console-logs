@@ -24,8 +24,8 @@ jobs:
           java-version: '17' # Replace with the version of Java required for your Gradle build
 
       # Run the publishPlugin Gradle task
-      - name: Test plugin
-        run: ./gradlew test
+      - name: Test plugin with sonar
+        run: ./gradlew test jacocoTestReport sonarqube
 
       # Run the publishPlugin Gradle task
       - name: Release snapshot plugin
