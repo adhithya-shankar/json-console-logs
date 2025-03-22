@@ -1,4 +1,4 @@
-name: Release Snapshot
+name: Test
 
 on:
   push:
